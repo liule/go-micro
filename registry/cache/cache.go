@@ -2,6 +2,7 @@
 package cache
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
 	"sync"
@@ -408,7 +409,7 @@ func (c *cache) watch(w registry.Watcher) error {
 			close(stop)
 			return err
 		}
-
+		fmt.Printf("[cache.watch] : [%v] [%s] [%v]", res.Action, res.Service.Name, res.Service.Nodes[0].Id)
 		// reset the error status since we succeeded
 		if err := c.getStatus(); err != nil {
 			// reset status
