@@ -409,7 +409,7 @@ func (c *cache) watch(w registry.Watcher) error {
 			close(stop)
 			return err
 		}
-		fmt.Printf("[cache.watch] : [%v] [%s] [%v]", res.Action, res.Service.Name, res.Service.Nodes[0].Id)
+		fmt.Printf("[cache.watch] : [%v] [%s] [%v] \n", res.Action, res.Service.Name, res.Service.Nodes[0].Id)
 		// reset the error status since we succeeded
 		if err := c.getStatus(); err != nil {
 			// reset status
@@ -430,6 +430,13 @@ func (c *cache) GetService(service string, opts ...registry.GetOption) ([]*regis
 	// if there's nothing return err
 	if len(services) == 0 {
 		return nil, registry.ErrNotFound
+	}
+
+	for _, v := range services {
+		for _, node := range v.Nodes {
+			fmt.Printf("[cache.GetService] [%s] [%v] [%v] \n", service, node.Id, node.Address)
+		}
+
 	}
 
 	// return services
